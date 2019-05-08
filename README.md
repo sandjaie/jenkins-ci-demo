@@ -33,3 +33,9 @@ $ sudo mkdir -p /var/jenkins_home
 $ sudo chown -R 1000:1000 /var/jenkins_home/
 
 $ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+
+
+# To access docker.sock on the host machine
+Build the jenkins docker image using the Dockerfile
+
+$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins -d jenkins-docker:latest
