@@ -75,5 +75,21 @@ Jenkins.instance.pluginManager.plugins.each{
     println ("${plugin.getShortName()}: ${plugin.getVersion()}")
 }
 ```
+Add the required job-dsl groovy scripts from the job-dsl-samples directory to your repo and create a seed job in your jenkins.
+
+Seed job specifications: <br>
+Set the following:
+* Source Code Management: 
+    * Git
+        * Repository URL : Add the repo here
+* Build
+    * Process Job DSLs
+        *  Look on filesystem : Add the scripts path here
+
+
+My docker hub repository 
+where the container gets pushed
+
+https://hub.docker.com/r/sandjaie/nodejs-docker-example/tags
 
 #### To run the groovy scripts as admin, to avoid the manual approval every time there is change in the groovy script, configure 'authorize-project' plugin and run the script as admin
