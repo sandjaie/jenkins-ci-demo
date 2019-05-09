@@ -16,6 +16,6 @@ job(jobName) {
                          // Manage Jenkins -> Configure Tools -> NodeJS Installations -> Name
     }
     steps {
-        shell("npm install")
+        shell("npm test")
     }
 }
