@@ -1,48 +1,77 @@
-# CICD with jenkins
+# CI with jenkins
 
-Install jenkins in a container with 
+Build a jenkins container and run jobs...
 
-# Installing Docker on a ubuntu machine
-$ sudo apt-get update
+### Installing Docker on a ubuntu machine
+`$ sudo apt-get update`
 
-$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+`$ sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D`
 
-$ sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+`$ sudo apt-add-repository 'deb https://apt.dockerproject.org/repo ubuntu-xenial main'`
 
-$ sudo apt-get update
+`$ sudo apt-get update`
 
-$ sudo apt-get install -y docker-engine
+`$ sudo apt-get install -y docker-engine`
 
-$ sudo systemctl enable docker
+`$ sudo systemctl enable docker`
 
-$ sudo usermod -a -G docker ubuntu
+`$ sudo usermod -a -G docker ubuntu`
 
 Check here for Ubuntu 18.04: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04
 
-# Installing Docker on Amazon Linux
-$ sudo yum update -y
+### Installing Docker on Amazon Linux
+`$ sudo yum update -y`
 
-$ sudo amazon-linux-extras install docker
+`$ sudo amazon-linux-extras install docker`
 
-$ sudo usermod -a -G docker ec2-user
-
-
-# Install Jenkins
-$ sudo mkdir -p /var/jenkins_home
-
-$ sudo chown -R 1000:1000 /var/jenkins_home/
-
-$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts
+`$ sudo usermod -a -G docker ec2-user`
 
 
-# To access docker.sock on the host machine
+### Installing Jenkins
+```$ sudo mkdir -p /var/jenkins_home```
+
+```$ sudo chown -R 1000:1000 /var/jenkins_home/```
+
+```$ docker pull jenkins/jenkins:lts```
+
+```$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home --name jenkins -d jenkins/jenkins:lts```
+
+
+### To access docker.sock on the host machine
 Build the jenkins docker image using the Dockerfile
 
-Always check 'ls -lrt /var/run/docker.sock' user and group. Change the group ID of docker accordingly in the dockerfile before building.
+Always check `'ls -lrt /var/run/docker.sock'` user and group. Change the group ID of docker accordingly in the dockerfile before building.
 
-$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins -d jenkins-docker:latest
+Build jenkins from the Dockerfile and run wirh shared volume so docker.sock is accessible to jenkins container.
+
+```$ docker build -t jenkins-docker .```
+
+```$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins -d jenkins-docker:latest```
 
 
-# To start the jenkins container when docker service is restarted or started
+### To start the jenkins container when docker service is restarted or started
 
-$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins  --restart unless-stopped -d jenkins-docker:latest
+```$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins  --restart unless-stopped -d jenkins-docker:latest```
+
+
+### To extract the list of installed plugins
+source https://github.com/jenkinsci/docker
+
+```
+JENKINS_HOST=username:password@myhost.com:port
+```
+
+```
+curl -sSL "http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortName|/*/*/version&wrapper=plugins" | perl -pe 's/.*?<shortName>([\w-]+).*?<version>([^<]+)()(<\/\w+>)+/\1 \2\n/g'|sed 's/ /:/'
+```
+
+Or run the following script in your jenkins
+
+http://<yourip>:8080/script
+
+```
+Jenkins.instance.pluginManager.plugins.each{
+  plugin -> 
+    println ("${plugin.getShortName()}: ${plugin.getVersion()}")
+}
+```
