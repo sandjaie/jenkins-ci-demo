@@ -75,3 +75,5 @@ Jenkins.instance.pluginManager.plugins.each{
     println ("${plugin.getShortName()}: ${plugin.getVersion()}")
 }
 ```
+
+#### To run the groovy scripts as admin, to avoid the manual approval every time there is change in the groovy script, configure 'authorize-project' plugin and run the script as admin
