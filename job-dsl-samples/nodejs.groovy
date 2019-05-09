@@ -1,5 +1,5 @@
 def project = 'nodejs-docker-demo'
-def jobName = "${project}"
+def jobName = 'nodejs-demo'
 
 job(jobName) {
     scm {
