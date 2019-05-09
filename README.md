@@ -41,3 +41,8 @@ Build the jenkins docker image using the Dockerfile
 Always check 'ls -lrt /var/run/docker.sock' user and group. Change the group ID of docker accordingly in the dockerfile before building.
 
 $ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins -d jenkins-docker:latest
+
+
+# To start the jenkins container when docker service is restarted or started
+
+$ docker run -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock --name jenkins  --restart unless-stopped -d jenkins-docker:latest
