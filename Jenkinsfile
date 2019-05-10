@@ -18,7 +18,7 @@ pipeline {
         stage('Building Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${registryName}:${commit_id}")
+                    dockerImage = docker.build("${registryName}:${commit_id}", '.')
                 }
             }
         }
