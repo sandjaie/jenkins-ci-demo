@@ -67,7 +67,7 @@ curl -sSL "http://$JENKINS_HOST/pluginManager/api/xml?depth=1&xpath=/*/*/shortNa
 
 Or run the following script in your jenkins
 
-http://<yourip>:8080/script
+http://localhost:8080/script
 
 ```
 Jenkins.instance.pluginManager.plugins.each{
@@ -88,9 +88,12 @@ Set the following:
 
 
 My docker hub repository 
-where the container gets pushed
-
+where the container gets pushed<br>
 https://hub.docker.com/r/sandjaie/nodejs-docker-example/tags
+
+My sample forked nodejs project:<br>
+https://github.com/sandjaie/nodejs-docker-demo<br>
+I use the above repo to test the automation, under 'jobs-dsl' and 'jenkins-pipeline' the scripts are placed.
 
 #### To run the groovy scripts as admin, to avoid the manual approval every time there is change in the groovy script, configure 'authorize-project' plugin and run the script as admin
 
