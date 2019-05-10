@@ -102,4 +102,5 @@ Go to Manage Jenkins -> Configue System ->'Global Slack Notifier Settings' <br>
 * Slack compatible app URL: https://hooks.slack.com/services/
 * Team Subdomain: 'your slack worspace domain'
 * Intergration Token Credentials ID: 'webhook token' add it as a secret (find it in the webhook url in setup instructions section in slack)
-* Channel or Slack ID : 'your channel'
+* Channel or Slack ID : 'your channel'<br>
+Use Jenkinsfile.v3 sample file
