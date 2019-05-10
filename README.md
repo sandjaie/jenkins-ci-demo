@@ -42,7 +42,7 @@ Build the jenkins docker image using the Dockerfile
 
 Always check `'ls -lrt /var/run/docker.sock'` user and group. Change the group ID of docker accordingly in the dockerfile before building.
 
-Build jenkins from the Dockerfile and run wirh shared volume so docker.sock is accessible to jenkins container.
+Build jenkins from the Dockerfile and run with shared volume so docker.sock is accessible to jenkins container.
 
 ```$ docker build -t jenkins-docker .```
 
