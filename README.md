@@ -93,3 +93,13 @@ where the container gets pushed
 https://hub.docker.com/r/sandjaie/nodejs-docker-example/tags
 
 #### To run the groovy scripts as admin, to avoid the manual approval every time there is change in the groovy script, configure 'authorize-project' plugin and run the script as admin
+
+### Slack Intergration
+plugin: Slack Notification Plugin
+
+In you slack workspace add the app 'incoming webhooks' to the 'alerts' channel.<br>
+Go to Manage Jenkins -> Configue System ->'Global Slack Notifier Settings' <br>
+* Slack compatible app URL: https://hooks.slack.com/services/
+* Team Subdomain: 'your slack worspace domain'
+* Intergration Token Credentials ID: 'webhook token' add it as a secret (find it in the webhook url in setup instructions section in slack)
+* Channel or Slack ID : 'your channel'
