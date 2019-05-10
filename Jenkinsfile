@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                        def app = docker.build("${registryName}:${commit_id}", '.').push()
+                        docker.build("${registryName}:${commit_id}", '.').push()
                     }
                 }
             }
