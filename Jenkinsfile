@@ -1,6 +1,7 @@
 pipeline {
     environment {
         registryName = "sandjaie/jenkins-ci"
+        registryCredential = 'dockerhub'
     }
     agent any
 
@@ -17,11 +18,31 @@ pipeline {
         stage('Building Image') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'dockerhub') {
-                        docker.build("${registryName}:${commit_id}", '.').push()
+                    dockerImage = docker.build("${registryName}:${commit_id}")
+                }
+            }
+        }
+        stage('Push Image') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        dockerImage.push()
                     }
                 }
             }
+        }
+        stage('Docker Purge') {
+            steps {
+                script {
+                    sh 'docker image prune -f'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up workspace'
+            deleteDir()
         }
     }
 }
