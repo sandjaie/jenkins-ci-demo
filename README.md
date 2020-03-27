@@ -1,6 +1,6 @@
 # CI with jenkins
 
-Build a jenkins container and run jobs.!
+Build a jenkins container and run jobs.
 
 ### Installing Docker on a ubuntu machine
 ```
